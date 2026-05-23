@@ -1,0 +1,243 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.52);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 120ms ease;
+}
+
+.modal {
+  width: 480px;
+  max-width: 95vw;
+  border-radius: 14px;
+  background: var(--modal-bg);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-elevated);
+  animation: slideUp 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+}
+
+.modal-form-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.color-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 12px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+
+.radio-item:hover {
+  background: var(--surface-hover);
+}
+
+.radio-item input[type='radio'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-color);
+  cursor: pointer;
+}
+
+.radio-item span {
+  color: var(--text-soft);
+  font-size: 13px;
+}
+
+.radio-item input[type='radio']:checked + span {
+  color: var(--accent-text);
+}
+
+.radio-item input[type='radio']:checked {
+  accent-color: var(--accent-color);
+}
+
+.modal-form-select {
+  width: 100%;
+  padding: var(--modal-control-pad-y) var(--modal-control-pad-x);
+  background: var(--surface-3);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  outline: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.modal-form-select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+.color-input-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.color-picker {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 4px;
+  cursor: pointer;
+  transition: border-color 140ms ease;
+}
+
+.color-picker:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+.color-hex-input {
+  width: 100%;
+  padding: var(--modal-control-pad-y) var(--modal-control-pad-x);
+  background: var(--surface-3);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  text-transform: uppercase;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.color-hex-input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+.color-hex-input::placeholder {
+  color: var(--text-muted);
+}
+
+.preview-section {
+  padding-top: 8px;
+}
+
+.preview-card {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-1);
+  min-height: 120px;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.preview-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-badge {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent-color);
+}
+
+.preview-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preview-stats .stat-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--surface-2);
+}
+
+.preview-stats .stat-label {
+  color: var(--text-muted);
+}
+
+.preview-stats .stat-value {
+  color: var(--text-soft);
+}
+
+.preview-stats .stat-accent {
+  color: var(--accent-text);
+  font-weight: 500;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

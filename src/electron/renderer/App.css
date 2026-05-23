@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@source "../src/**/*.tsx";
+
+/* 1. Frutiger Aero Vibrant Background */
+body {
+  background: radial-gradient(circle at 0% 0%, #00f2fe 0%, #4facfe 50%, #43e97b 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* 2. Aero Glass Panel Effect (For Sidebar and Modals) */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Glass (For the Left Sidebar) */
+.glass-panel-dark {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset -1px 0 10px rgba(255, 255, 255, 0.05);
+}
+
+/* 3. Custom Selected Item Glow Effect */
+.aero-selected {
+  background: rgba(0, 102, 255, 0.3);
+  border: 1px solid rgba(0, 163, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 163, 255, 0.6), inset 0 0 10px rgba(0, 163, 255, 0.4);
+}
+
+/* 4. Button Glow (High-gloss) */
+.aero-btn {
+  background: linear-gradient(180deg, #00A3FF 0%, #0066FF 100%);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), 0 4px 10px rgba(0, 102, 255, 0.4);
+  border: 1px solid #005ce6;
+}
+
+.aero-btn:hover {
+  background: linear-gradient(180deg, #33b5ff 0%, #005ce6 100%);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 4px 15px rgba(0, 102, 255, 0.6);
+}
+
+/* Custom Scrollbar for Aero Feel */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
