@@ -6,6 +6,15 @@ A visually stunning, desktop task management application built with **Electron**
 
 ---
 
+## 📸 App Screenshots
+
+![Home Screen](screenshots/1.png)
+
+![Adding New Tasks](screenshots/2.png)
+
+![Manage Categories](screenshots/3.png)
+
+
 ## Features
 
 ### Core Task Management
