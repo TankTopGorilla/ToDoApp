@@ -247,7 +247,7 @@ The database is stored at `%APPDATA%/ToDoApp/tasks.db` (Windows) or equivalent u
 ## Project Structure
 
 ```
-ToDoAppV2/
+ToDoApp/
 ├── electron/                          # Main process (Node.js)
 │   ├── main.ts                        # App entry, window creation, lifecycle
 │   ├── db.ts                          # SQLite init, schema, connection singleton
@@ -300,8 +300,8 @@ ToDoAppV2/
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ToDoAppV2.git
-cd ToDoAppV2
+git clone https://github.com/TankTopGorilla/ToDoApp.git
+cd ToDoApp
 
 # Install dependencies
 npm install
