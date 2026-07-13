@@ -89,9 +89,25 @@ export default function CategoryManager({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      style={{
+        background: 'rgba(0, 0, 0, 0.5)',
+        backdropFilter: 'blur(var(--blur-modal))',
+        animation: 'fadeIn var(--transition-fast) both',
+      }}
+      onClick={onClose}
+    >
       <div
-        className="bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-2xl border border-gray-700"
+        style={{
+          background: 'rgba(30, 41, 59, 0.85)',
+          borderRadius: 'var(--radius-modal)',
+          boxShadow: 'var(--shadow-modal)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(12px)',
+          animation: 'slideUp var(--transition-normal) both',
+        }}
+        className="p-6 w-full max-w-2xl"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -156,7 +172,7 @@ export default function CategoryManager({
               </div>
             </div>
 
-            <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <button type="submit" className="aero-btn w-full px-4 py-2 text-white rounded-lg">
               Add Category
             </button>
           </form>

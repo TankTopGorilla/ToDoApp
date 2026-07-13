@@ -66,9 +66,25 @@ export default function TaskModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={onClose}>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      style={{
+        background: 'rgba(0, 0, 0, 0.5)',
+        backdropFilter: 'blur(var(--blur-modal))',
+        animation: 'fadeIn var(--transition-fast) both',
+      }}
+      onClick={onClose}
+    >
       <div
-        className="bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-md border border-gray-700"
+        style={{
+          background: 'rgba(30, 41, 59, 0.85)',
+          borderRadius: 'var(--radius-modal)',
+          boxShadow: 'var(--shadow-modal)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(12px)',
+          animation: 'slideUp var(--transition-normal) both',
+        }}
+        className="p-6 w-full max-w-md"
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -212,13 +228,14 @@ export default function TaskModal({
           <div className="flex justify-end gap-3 pt-4">
             <button
               type="button"
-              className="px-4 py-2 text-gray-300 hover:text-white border border-gray-600 rounded-lg hover:bg-gray-700 transition-colors"
+              className="px-4 py-2 text-gray-300 hover:text-white border border-gray-600 rounded-lg hover:bg-gray-700"
+              style={{ transition: 'all var(--transition-fast)' }}
               onClick={onClose}
             >
               Cancel
             </button>
 
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <button type="submit" className="aero-btn px-4 py-2 text-white rounded-lg">
               {task ? 'Save Changes' : 'Add Task'}
             </button>
           </div>
