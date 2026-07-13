@@ -1,0 +1,59 @@
+/* ThemeSettings.css - Dynamic Glassmorphism Tokens */
+
+:root {
+  /* Glassmorphism */
+  --glass-blur: 8px;
+  --neon-glow: hsl(180, 70%, 60%);
+  --glass-opacity: 0.15;
+  --button-focus-glow: rgba(0, 150, 255, 0.3);
+  --card-hover-shadow: rgba(0, 120, 255, 0.2);
+  --modal-bg: hsl(200, 85%, 95%);
+  --aero-btn-gradient: linear-gradient(135deg, hsl(180, 80%, 60%) 0%, hsl(180, 90%, 60%) 100%);
+
+  /* Motion */
+  --transition-fast: 150ms ease-out;
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Depth */
+  --shadow-card: 0 4px 20px rgba(0, 120, 255, 0.2);
+  --shadow-modal: 0 16px 48px rgba(0, 0, 0, 0.3);
+  --blur-modal: 20px;
+  --blur-sidebar: 24px;
+
+  /* Typography */
+  --text-heading: 1.25rem;
+  --text-body: 0.875rem;
+  --text-caption: 0.75rem;
+  --leading-relaxed: 1.625;
+
+  /* Spacing */
+  --radius-card: 2rem;
+  --radius-modal: 1rem;
+}
+
+.aero-btn {
+  background: var(--aero-btn-gradient);
+  box-shadow: 0 0 10px var(--button-focus-glow);
+  transition: box-shadow var(--transition-fast);
+}
+
+.aero-btn:active {
+  box-shadow: 0 0 15px var(--button-focus-glow);
+}
+
+.task-card:hover {
+  box-shadow: var(--shadow-card);
+  transform: scale(1.02);
+}
+
+.glass-panel {
+  backdrop-filter: blur(var(--glass-blur));
+  opacity: var(--glass-opacity);
+}
+
+.theme-modals {
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-modal);
+  opacity: 0.15;
+}
