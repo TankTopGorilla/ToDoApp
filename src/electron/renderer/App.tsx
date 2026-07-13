@@ -225,7 +225,7 @@ export default function App() {
         </div>
 
         <div className="mt-auto space-y-3">
-           <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-xl">
+           <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-xl animate-[scaleIn_var(--transition-normal)_both]">
               <div className="flex items-center gap-3 mb-3">
                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3"><path d="M20 6L9 17L4 12" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -266,7 +266,7 @@ export default function App() {
                   placeholder="Search tasks..." 
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-64 bg-white/60 backdrop-blur-md border border-white/50 rounded-full px-6 py-3 pl-12 outline-none focus:bg-white/80 focus:ring-4 focus:ring-blue-500/20 transition-all font-medium placeholder:text-gray-500 shadow-inner"
+                  className="w-64 bg-white/60 backdrop-blur-md border border-white/50 rounded-full px-6 py-3 pl-12 outline-none focus:bg-white/80 focus:ring-4 focus:ring-blue-500/20 focus:w-[350px] transition-all duration-[var(--transition-normal)] font-medium placeholder:text-gray-500 shadow-inner"
                 />
                 <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
              </div>
