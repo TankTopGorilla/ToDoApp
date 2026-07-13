@@ -34,7 +34,12 @@ export default function TaskCard({ task, onEdit, onDelete, onToggle, onTaskUpdat
   };
 
   return (
-    <div className={`task-card${isDone ? ' done' : ''}`}>
+    <div
+      className={`task-card transition-all duration-[var(--transition-normal)]${
+        isDone ? ' done' : ''
+      }`}
+      style={{ borderRadius: 'var(--radius-card)' }}
+    >
       <div className="task-card-header">
         <button
           type="button"
@@ -85,33 +90,37 @@ export default function TaskCard({ task, onEdit, onDelete, onToggle, onTaskUpdat
           )}
         </button>
 
-        <span className={`task-title${isDone ? ' done-title' : ''}`}>
+        <span
+          className={`task-title text-[var(--text-heading)]${
+            isDone ? ' done-title' : ''
+          }`}
+        >
           {task.title}
         </span>
       </div>
 
       {task.description ? (
-        <p className="task-description">{task.description}</p>
+        <p className="task-description text-[var(--text-body)] leading-[var(--leading-relaxed)]">{task.description}</p>
       ) : null}
 
       <div className="task-meta">
-        <span className={`badge ${PRIORITY_COLORS[task.priority]}`}>
+        <span className={`badge ${PRIORITY_COLORS[task.priority]} text-[var(--text-caption)]`}>
           {PRIORITY_LABELS[task.priority]}
         </span>
 
-        <span className={`badge ${STATUS_COLORS[task.status]}`}>
+        <span className={`badge ${STATUS_COLORS[task.status]} text-[var(--text-caption)]`}>
           {STATUS_LABELS[task.status]}
         </span>
 
         {task.due_date ? (
-          <span className="badge bg-slate-700/60 text-slate-300">
-            📅 {new Date(task.due_date).toLocaleDateString()}
+          <span className="badge bg-slate-700/60 text-slate-300 text-[var(--text-caption)]">
+            {new Date(task.due_date).toLocaleDateString()}
           </span>
         ) : null}
 
         {task.category_name ? (
           <span
-            className="badge"
+            className="badge text-[var(--text-caption)]"
             style={{
               backgroundColor: `${task.category_color ?? '#6366f1'}30`,
               color: task.category_color ?? '#ffffff',
