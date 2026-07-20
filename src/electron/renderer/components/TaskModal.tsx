@@ -3,6 +3,7 @@ import {
   Category,
   NewTask,
   Priority,
+  Recurrence,
   Status,
   Task,
 } from '../../../types/task';
@@ -10,27 +11,31 @@ import {
 interface Props {
   task?: Task | null;
   categories: Category[];
+  initialDate?: string | null;
   onSave: (data: NewTask) => void | Promise<void>;
   onClose: () => void;
 }
 
-const blank = (): NewTask => ({
+const blank = (initialDate?: string | null): NewTask => ({
   title: '',
   description: '',
-  due_date: null,
+  due_date: initialDate || null,
+  recurrence: null,
   priority: 'medium',
   status: 'todo',
   category_id: null,
   is_favorite: 0,
+  sort_order: 0,
 });
 
 export default function TaskModal({
   task,
   categories,
+  initialDate,
   onSave,
   onClose,
 }: Props) {
-  const [form, setForm] = useState<NewTask>(blank());
+  const [form, setForm] = useState<NewTask>(blank(initialDate));
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -39,17 +44,19 @@ export default function TaskModal({
         title: task.title,
         description: task.description,
         due_date: task.due_date,
+        recurrence: task.recurrence ?? null,
         priority: task.priority,
         status: task.status,
         category_id: task.category_id,
         is_favorite: task.is_favorite ?? 0,
+        sort_order: task.sort_order ?? 0,
       });
     } else {
-      setForm(blank());
+      setForm(blank(initialDate));
     }
 
     setError('');
-  }, [task]);
+  }, [task, initialDate]);
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -201,6 +208,29 @@ export default function TaskModal({
               }
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
+          </div>
+
+          <div>
+            <label htmlFor="task-recurrence" className="block text-sm font-medium text-gray-300 mb-1">Repeat</label>
+            <select
+              id="task-recurrence"
+              value={form.recurrence ?? ''}
+              onChange={(event) =>
+                setForm((current) => ({
+                  ...current,
+                  recurrence: (event.target.value || null) as Recurrence | null,
+                }))
+              }
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="">Does not repeat</option>
+              <option value="daily">Daily</option>
+              <option value="weekdays">Weekdays</option>
+              <option value="weekly">Weekly</option>
+              <option value="biweekly">Biweekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
           </div>
 
           <div>

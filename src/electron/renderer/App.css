@@ -1,9 +1,9 @@
 @import "tailwindcss";
 @source "../src/**/*.tsx";
 
-/* 1. Frutiger Aero Vibrant Background */
+/* 1. Frutiger Aero Vibrant Background (fallback while canvas loads) */
 body {
-  background: radial-gradient(circle at 0% 0%, #00f2fe 0%, #4facfe 50%, #43e97b 100%);
+  background: #0f172a;
   background-attachment: fixed;
   background-size: cover;
   margin: 0;
@@ -11,6 +11,218 @@ body {
   height: 100vh;
   overflow: hidden;
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Theme CSS variables */
+:root,
+[data-theme-mode="dark"] {
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --bg-glass-sidebar: rgba(15, 23, 42, 0.6);
+  --bg-glass-main: rgba(255, 255, 255, 0.15);
+  --bg-card: rgba(255, 255, 255, 0.4);
+  --bg-canvas: #0f172a;
+  --border-light: rgba(255, 255, 255, 0.1);
+  --text-card: #1e293b;
+}
+[data-theme-mode="light"] {
+  --text-primary: #1e293b;
+  --text-secondary: rgba(30, 41, 59, 0.6);
+  --bg-glass-sidebar: rgba(255, 255, 255, 0.75);
+  --bg-glass-main: rgba(255, 255, 255, 0.35);
+  --bg-card: rgba(255, 255, 255, 0.7);
+  --bg-canvas: #dbeafe;
+  --border-light: rgba(0, 0, 0, 0.1);
+  --text-card: #1e293b;
+}
+
+/* Accent color applied to aero elements */
+.aero-btn {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-color) 80%, white) 0%, var(--accent-color) 100%) !important;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), 0 4px 10px color-mix(in srgb, var(--accent-color) 50%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--accent-color) 80%, black) !important;
+}
+.aero-btn:hover {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-color) 60%, white) 0%, var(--accent-color) 100%) !important;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 4px 15px color-mix(in srgb, var(--accent-color) 50%, transparent) !important;
+}
+.aero-selected {
+  background: color-mix(in srgb, var(--accent-color) 30%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--accent-color) 80%, transparent) !important;
+  box-shadow: 0 0 15px color-mix(in srgb, var(--accent-color) 60%, transparent), inset 0 0 10px color-mix(in srgb, var(--accent-color) 40%, transparent) !important;
+}
+
+/* Light mode overrides */
+[data-theme-mode="light"] body {
+  background: #dbeafe !important;
+}
+[data-theme-mode="light"] .glass-panel-dark {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: inset -1px 0 10px rgba(0, 0, 0, 0.03) !important;
+}
+[data-theme-mode="light"] .glass-panel {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+}
+/* Text colors */
+[data-theme-mode="light"] .text-white { color: #1e293b !important; }
+[data-theme-mode="light"] .text-white\/60 { color: rgba(30, 41, 59, 0.6) !important; }
+[data-theme-mode="light"] .text-white\/40 { color: rgba(30, 41, 59, 0.4) !important; }
+[data-theme-mode="light"] .text-white\/80 { color: rgba(30, 41, 59, 0.8) !important; }
+[data-theme-mode="light"] .text-white\/50 { color: rgba(30, 41, 59, 0.5) !important; }
+[data-theme-mode="light"] .text-white\/30 { color: rgba(30, 41, 59, 0.3) !important; }
+[data-theme-mode="light"] .text-white\/25 { color: rgba(30, 41, 59, 0.25) !important; }
+[data-theme-mode="light"] .text-gray-500 { color: #64748b !important; }
+[data-theme-mode="light"] .text-gray-600 { color: #475569 !important; }
+[data-theme-mode="light"] .text-gray-800 { color: #0f172a !important; }
+[data-theme-mode="light"] .text-gray-300 { color: #334155 !important; }
+[data-theme-mode="light"] .text-gray-400 { color: #64748b !important; }
+[data-theme-mode="light"] .text-gray-700 { color: #1e293b !important; }
+[data-theme-mode="light"] .text-red-700 { color: #b91c1c !important; }
+[data-theme-mode="light"] .text-emerald-700 { color: #047857 !important; }
+[data-theme-mode="light"] .text-red-600 { color: #dc2626 !important; }
+[data-theme-mode="light"] .text-emerald-600 { color: #059669 !important; }
+[data-theme-mode="light"] .text-amber-600 { color: #d97706 !important; }
+[data-theme-mode="light"] .text-red-500 { color: #ef4444 !important; }
+[data-theme-mode="light"] .text-emerald-500 { color: #10b981 !important; }
+[data-theme-mode="light"] .text-amber-300 { color: #b45309 !important; }
+[data-theme-mode="light"] .text-amber-400 { color: #d97706 !important; }
+[data-theme-mode="light"] .text-red-400 { color: #ef4444 !important; }
+[data-theme-mode="light"] .text-emerald-400 { color: #10b981 !important; }
+[data-theme-mode="light"] .text-cyan-400 { color: #0284c7 !important; }
+[data-theme-mode="light"] .text-blue-500 { color: #2563eb !important; }
+[data-theme-mode="light"] .text-blue-600 { color: #1d4ed8 !important; }
+[data-theme-mode="light"] .text-blue-700 { color: #1e40af !important; }
+[data-theme-mode="light"] .text-rose-500 { color: #e11d48 !important; }
+[data-theme-mode="light"] .text-orange-400 { color: #ea580c !important; }
+[data-theme-mode="light"] .text-orange-400\/60 { color: rgba(234, 88, 12, 0.6) !important; }
+/* Background colors */
+[data-theme-mode="light"] .bg-white\/40 { background: rgba(255, 255, 255, 0.7) !important; }
+[data-theme-mode="light"] .bg-white\/60 { background: rgba(255, 255, 255, 0.85) !important; }
+[data-theme-mode="light"] .bg-white\/70 { background: rgba(255, 255, 255, 0.9) !important; }
+[data-theme-mode="light"] .bg-white\/10 { background: rgba(0, 0, 0, 0.04) !important; }
+[data-theme-mode="light"] .bg-white\/20 { background: rgba(0, 0, 0, 0.05) !important; }
+[data-theme-mode="light"] .bg-white\/5 { background: rgba(0, 0, 0, 0.02) !important; }
+[data-theme-mode="light"] .bg-white { background: #ffffff !important; }
+[data-theme-mode="light"] .bg-red-50\/80 { background: rgba(254, 226, 226, 0.9) !important; }
+[data-theme-mode="light"] .bg-emerald-50\/80 { background: rgba(209, 250, 229, 0.9) !important; }
+[data-theme-mode="light"] .bg-gray-100 { background: rgba(241, 245, 249, 0.8) !important; }
+[data-theme-mode="light"] .bg-amber-100 { background: rgba(254, 243, 199, 0.8) !important; }
+[data-theme-mode="light"] .bg-red-100 { background: rgba(254, 226, 226, 0.8) !important; }
+[data-theme-mode="light"] .bg-emerald-100 { background: rgba(209, 250, 229, 0.8) !important; }
+[data-theme-mode="light"] .bg-red-100\/60 { background: rgba(254, 226, 226, 0.8) !important; }
+[data-theme-mode="light"] .bg-emerald-100\/40 { background: rgba(209, 250, 229, 0.7) !important; }
+[data-theme-mode="light"] .bg-blue-600\/50 { background: rgba(37, 99, 235, 0.1) !important; }
+[data-theme-mode="light"] .bg-amber-400\/20 { background: rgba(217, 119, 6, 0.08) !important; }
+[data-theme-mode="light"] .bg-slate-500\/20 { background: rgba(100, 116, 139, 0.15) !important; }
+[data-theme-mode="light"] .bg-blue-500\/20 { background: rgba(59, 130, 246, 0.12) !important; }
+[data-theme-mode="light"] .bg-red-500\/20 { background: rgba(239, 68, 68, 0.1) !important; }
+[data-theme-mode="light"] .bg-yellow-500\/20 { background: rgba(234, 179, 8, 0.1) !important; }
+[data-theme-mode="light"] .bg-emerald-500\/20 { background: rgba(16, 185, 129, 0.1) !important; }
+[data-theme-mode="light"] .bg-gradient-to-br.from-cyan-400 {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.8), rgba(37, 99, 235, 0.8)) !important;
+}
+/* Border colors */
+[data-theme-mode="light"] .border-white\/10 { border-color: rgba(0, 0, 0, 0.08) !important; }
+[data-theme-mode="light"] .border-white\/20 { border-color: rgba(0, 0, 0, 0.1) !important; }
+[data-theme-mode="light"] .border-white\/30 { border-color: rgba(0, 0, 0, 0.12) !important; }
+[data-theme-mode="light"] .border-white\/40 { border-color: rgba(0, 0, 0, 0.15) !important; }
+[data-theme-mode="light"] .border-white\/50 { border-color: rgba(0, 0, 0, 0.12) !important; }
+[data-theme-mode="light"] .border-gray-200 { border-color: rgba(203, 213, 225, 0.8) !important; }
+[data-theme-mode="light"] .border-blue-400\/30 { border-color: rgba(37, 99, 235, 0.3) !important; }
+[data-theme-mode="light"] .border-amber-500\/20 { border-color: rgba(217, 119, 6, 0.15) !important; }
+[data-theme-mode="light"] .border-red-500\/20 { border-color: rgba(239, 68, 68, 0.15) !important; }
+[data-theme-mode="light"] .border-emerald-500\/20 { border-color: rgba(16, 185, 129, 0.15) !important; }
+[data-theme-mode="light"] .border-blue-500\/20 { border-color: rgba(59, 130, 246, 0.2) !important; }
+/* Hover states */
+[data-theme-mode="light"] .hover\:bg-white\/10:hover { background: rgba(0, 0, 0, 0.05) !important; }
+[data-theme-mode="light"] .hover\:bg-white\/5:hover { background: rgba(0, 0, 0, 0.03) !important; }
+[data-theme-mode="light"] .hover\:bg-amber-200:hover { background: rgba(253, 230, 138, 0.7) !important; }
+[data-theme-mode="light"] .hover\:bg-red-200:hover { background: rgba(254, 202, 202, 0.7) !important; }
+[data-theme-mode="light"] .hover\:bg-emerald-200:hover { background: rgba(167, 243, 208, 0.7) !important; }
+[data-theme-mode="light"] .hover\:bg-gray-200:hover { background: rgba(226, 232, 240, 0.8) !important; }
+/* Placeholder */
+[data-theme-mode="light"] .placeholder\:text-gray-400::placeholder { color: #94a3b8 !important; }
+/* Shadows */
+[data-theme-mode="light"] .shadow-\[0_0_20px_rgba\(0\2c 163\2c 255\2c 0\.8\)\] { box-shadow: 0 0 15px rgba(0, 163, 255, 0.3) !important; }
+[data-theme-mode="light"] .shadow-\[0_0_15px_rgba\(239\2c 68\2c 68\2c 0\.15\)\] { box-shadow: 0 0 10px rgba(239, 68, 68, 0.08) !important; }
+[data-theme-mode="light"] .shadow-\[0_0_10px_rgba\(251\2c 146\2c 60\2c 0\.3\)\] { box-shadow: 0 0 8px rgba(251, 146, 60, 0.15) !important; }
+/* Specific Tailwind text color overrides for status labels */
+[data-theme-mode="light"] .text-slate-300 { color: #475569 !important; }
+[data-theme-mode="light"] .text-blue-300 { color: #2563eb !important; }
+[data-theme-mode="light"] .text-emerald-300 { color: #059669 !important; }
+[data-theme-mode="light"] .text-red-300 { color: #dc2626 !important; }
+[data-theme-mode="light"] .text-yellow-300 { color: #ca8a04 !important; }
+/* Modal card backgrounds — override inline rgba styles */
+[data-theme-mode="light"] div[style*="background: rgba(30, 41, 59, 0.85)"] {
+  background: rgba(248, 250, 252, 0.92) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+[data-theme-mode="light"] div[style*="background: rgba(30, 41, 59, 0.92)"] {
+  background: rgba(248, 250, 252, 0.92) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+[data-theme-mode="light"] div[style*="background: rgba(30, 41, 59, 0.9)"] {
+  background: rgba(248, 250, 252, 0.92) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+/* Modal overlay backgrounds */
+[data-theme-mode="light"] div[style*="background: rgba(0, 0, 0, 0.5)"] {
+  background: rgba(0, 0, 0, 0.15) !important;
+}
+[data-theme-mode="light"] div[style*="background: rgba(0, 0, 0, 0.4)"] {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+/* FocusTimer popover card uses bg-white */
+[data-theme-mode="light"] .bg-white.rounded-2xl {
+  background: #ffffff !important;
+  border-color: rgba(203, 213, 225, 0.5) !important;
+}
+
+/* Density: compact */
+[data-ui-density="compact"] .p-4 { padding: 0.6rem !important; }
+[data-ui-density="compact"] .p-5 { padding: 0.75rem !important; }
+[data-ui-density="compact"] .gap-3 { gap: 0.5rem !important; }
+[data-ui-density="compact"] .gap-4 { gap: 0.6rem !important; }
+[data-ui-density="compact"] .p-2\.5 { padding: 0.4rem 0.6rem !important; }
+[data-ui-density="compact"] .py-2\.5 { padding-top: 0.4rem !important; padding-bottom: 0.4rem !important; }
+[data-ui-density="compact"] .px-5 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+[data-ui-density="compact"] .text-3xl { font-size: 1.5rem !important; }
+[data-ui-density="compact"] .text-2xl { font-size: 1.25rem !important; }
+[data-ui-density="compact"] .h-24 { height: 3.5rem !important; }
+
+/* Density: pro (extra compact) */
+[data-ui-density="pro"] .p-4 { padding: 0.4rem !important; }
+[data-ui-density="pro"] .p-5 { padding: 0.5rem !important; }
+[data-ui-density="pro"] .gap-3 { gap: 0.3rem !important; }
+[data-ui-density="pro"] .gap-4 { gap: 0.4rem !important; }
+[data-ui-density="pro"] .p-2\.5 { padding: 0.25rem 0.4rem !important; }
+[data-ui-density="pro"] .py-2\.5 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+[data-ui-density="pro"] .px-5 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+[data-ui-density="pro"] .text-3xl { font-size: 1.25rem !important; }
+[data-ui-density="pro"] .text-2xl { font-size: 1.1rem !important; }
+[data-ui-density="pro"] .h-24 { height: 2.5rem !important; }
+[data-ui-density="pro"] .rounded-\[1\.5rem\] { border-radius: 0.75rem !important; }
+[data-ui-density="pro"] .rounded-\[2rem\] { border-radius: 0.75rem !important; }
+[data-ui-density="pro"] .m-2 { margin: 0.25rem !important; }
+[data-ui-density="pro"] svg:not(.keep-size) { width: 14px !important; height: 14px !important; }
+
+/* Background variants */
+[data-ui-background="bg-midnight"] .glass-panel-dark {
+  background: rgba(5, 10, 20, 0.85) !important;
+}
+[data-ui-background="bg-midnight"] .glass-panel {
+  background: rgba(10, 15, 30, 0.5) !important;
+}
+[data-ui-background="bg-midnight"] .bg-white\/40 {
+  background: rgba(10, 15, 30, 0.4) !important;
+}
+[data-ui-background="bg-midnight"] .bg-white\/60 {
+  background: rgba(15, 20, 35, 0.6) !important;
+}
+[data-ui-background="bg-midnight"] .bg-white\/70 {
+  background: rgba(15, 20, 35, 0.7) !important;
 }
 
 /* 1.5 Animation Keyframes */
@@ -53,27 +265,15 @@ body {
   box-shadow: inset -1px 0 10px rgba(255, 255, 255, 0.05);
 }
 
-/* 3. Custom Selected Item Glow Effect */
-.aero-selected {
-  background: rgba(0, 102, 255, 0.3);
-  border: 1px solid rgba(0, 163, 255, 0.8);
-  box-shadow: 0 0 15px rgba(0, 163, 255, 0.6), inset 0 0 10px rgba(0, 163, 255, 0.4);
-}
+/* 3. Custom Selected Item Glow Effect — now defined above with CSS variables */
 
-/* 4. Button Glow (High-gloss) */
+/* 4. Button Glow (High-gloss) — now defined above with CSS variables */
 .aero-btn {
-  background: linear-gradient(180deg, #00A3FF 0%, #0066FF 100%);
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), 0 4px 10px rgba(0, 102, 255, 0.4);
-  border: 1px solid #005ce6;
   transition: box-shadow var(--transition-fast), transform var(--transition-fast);
 }
-
 .aero-btn:hover {
-  background: linear-gradient(180deg, #33b5ff 0%, #005ce6 100%);
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 4px 15px rgba(0, 102, 255, 0.6);
   transform: translateY(-1px);
 }
-
 .aero-btn:active {
   transform: translateY(0);
 }

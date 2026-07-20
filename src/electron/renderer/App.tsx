@@ -22,6 +22,7 @@ import GanttView from './components/GanttView';
 import FocusTimer from './components/FocusTimer';
 import XpBar from './components/XpBar';
 import ThemeSettings from './components/ThemeSettings';
+import BackgroundEffect from './components/BackgroundEffect';
 
 type FilterStatus = 'all' | 'todo' | 'in-progress' | 'done';
 type CategoryFilter = 'all' | number;
@@ -37,6 +38,12 @@ function isOverdue(task: Task): boolean {
   today.setHours(0, 0, 0, 0);
   due.setHours(0, 0, 0, 0);
   return due < today;
+}
+
+function hexToRgb(hex: string): string {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!result) return '99, 102, 241';
+  return `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`;
 }
 
 function formatDate(dateStr: string | null): string {
@@ -81,7 +88,7 @@ export default function App() {
   const [levelUp, setLevelUp] = useState<{ level: number; title: string; unlocks: string[] } | null>(null);
   const [themeSettingsOpen, setThemeSettingsOpen] = useState(false);
   const [playerLevel, setPlayerLevel] = useState(1);
-  const [themePrefs, setThemePrefs] = useState<{ mode: 'light' | 'dark'; accent_color: string; density: string; unlocked_themes: string[] } | null>(null);
+  const [themePrefs, setThemePrefs] = useState<{ mode: 'light' | 'dark'; accent_color: string; density: string; background: string; unlocked_themes: string[] } | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const loadTasks = useCallback(async () => {
@@ -116,11 +123,12 @@ export default function App() {
       // Also get raw theme prefs
       const prefsResult = await window.electronAPI.getThemePrefs();
       if (prefsResult && typeof prefsResult === 'object' && !('error' in prefsResult)) {
-        const p = prefsResult as { mode: string; accent_color: string; density: string };
+        const p = prefsResult as { mode: string; accent_color: string; density: string; background: string };
         setThemePrefs({
           mode: p.mode as 'light' | 'dark',
           accent_color: p.accent_color,
           density: p.density,
+          background: p.background || 'default',
           unlocked_themes: r.unlocks,
         });
       }
@@ -359,9 +367,16 @@ export default function App() {
     await loadTasks();
   }
 
-  async function handleThemeSave(prefs: { mode: string; accent_color: string; density: string }) {
-    await window.electronAPI.updateThemePrefs(prefs);
-    setThemePrefs(prev => prev ? { ...prev, mode: prefs.mode as 'light' | 'dark', accent_color: prefs.accent_color, density: prefs.density } : null);
+  async function handleThemeSave(prefs: { mode: string; accent_color: string; density: string; background?: string }) {
+    // Map density-pro → compact for backend storage; keep 'pro' in local state for CSS
+    const backendDensity = prefs.density === 'density-pro' ? 'compact' : prefs.density;
+    const uiDensity = prefs.density;
+    const result = await window.electronAPI.updateThemePrefs({ mode: prefs.mode, accent_color: prefs.accent_color, density: backendDensity, background: prefs.background || 'default' });
+    if (result && typeof result === 'object' && 'error' in result) {
+      console.error('Theme save failed:', (result as { error: string }).error);
+      return;
+    }
+    setThemePrefs(prev => prev ? { ...prev, mode: prefs.mode as 'light' | 'dark', accent_color: prefs.accent_color, density: uiDensity, background: prefs.background || prev.background } : null);
     setThemeSettingsOpen(false);
   }
 
@@ -417,7 +432,18 @@ export default function App() {
       'Category';
 
   return (
-    <div className="w-screen h-screen flex text-white font-sans overflow-hidden">
+    <>
+      <BackgroundEffect />
+      <div
+        data-theme-mode={themePrefs?.mode || 'dark'}
+        data-ui-density={themePrefs?.density === 'density-pro' ? 'pro' : themePrefs?.density || 'comfortable'}
+        data-ui-background={themePrefs?.background || 'default'}
+        style={{
+          '--accent-color': themePrefs?.accent_color || '#6366f1',
+          '--accent-rgb': hexToRgb(themePrefs?.accent_color || '#6366f1'),
+        } as React.CSSProperties}
+        className="w-screen h-screen flex text-white font-sans overflow-hidden relative z-10"
+      >
       {/* LEFT SIDEBAR - Dark Glass */}
       <aside className="w-60 h-full glass-panel-dark flex flex-col p-4 gap-3 flex-shrink-0">
         <div className="flex items-center gap-4">
@@ -1004,5 +1030,6 @@ export default function App() {
         </div>
       )}
     </div>
+    </>
   );
 }
