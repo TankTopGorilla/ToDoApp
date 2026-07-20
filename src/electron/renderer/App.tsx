@@ -20,7 +20,6 @@ import CalendarView from './components/CalendarView';
 import TimelineView from './components/TimelineView';
 import GanttView from './components/GanttView';
 import FocusTimer from './components/FocusTimer';
-import TemplateManager from './components/TemplateManager';
 import XpBar from './components/XpBar';
 import ThemeSettings from './components/ThemeSettings';
 
@@ -63,7 +62,6 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [categoryManagerOpen, setCategoryManagerOpen] = useState(false);
-  const [templateManagerOpen, setTemplateManagerOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [modalPreFill, setModalPreFill] = useState<{ due_date?: string } | null>(null);
   const [quickCaptureOpen, setQuickCaptureOpen] = useState(false);
@@ -161,10 +159,18 @@ export default function App() {
       // Don't trigger shortcuts when typing in inputs
       const target = e.target as HTMLElement;
       const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT';
-      if (isInput && e.key !== 'Escape' && e.key !== '?') return;
+      if (isInput) return;
 
-      // When modals are open, only allow Escape and ? shortcuts
-      if ((modalOpen || categoryManagerOpen) && e.key !== 'Escape' && e.key !== '?') return;
+      // When modals are open, handle Escape to close, ? for help
+      if (modalOpen || categoryManagerOpen) {
+        if (e.key === 'Escape') {
+          setCategoryManagerOpen(false);
+          setModalOpen(false);
+        } else if (e.key === '?') {
+          setShowShortcuts(prev => !prev);
+        }
+        return;
+      }
 
       switch (e.key) {
         case 'n':
@@ -344,6 +350,11 @@ export default function App() {
   }
 
   async function handleReorder(updates: { id: number; status: Status; sort_order: number }[]) {
+    // Optimistically update local state so the kanban board responds instantly
+    setTasks(prev => prev.map(t => {
+      const update = updates.find(u => u.id === t.id);
+      return update ? { ...t, status: update.status, sort_order: update.sort_order } : t;
+    }));
     await window.electronAPI.updateTaskOrder(updates);
     await loadTasks();
   }
@@ -827,13 +838,6 @@ export default function App() {
           onUpdate={handleUpdateCategory}
           onDelete={handleDeleteCategory}
           onClose={() => setCategoryManagerOpen(false)}
-        />
-      )}
-
-      {templateManagerOpen && (
-        <TemplateManager
-          onClose={() => setTemplateManagerOpen(false)}
-          onApplied={() => { setTemplateManagerOpen(false); loadTasks(); }}
         />
       )}
 

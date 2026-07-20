@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -148,6 +148,14 @@ function SortableTaskCard({
   );
 }
 
+const MemoizedTaskCard = React.memo(SortableTaskCard, (prev, next) => {
+  return prev.task === next.task
+    && prev.onEdit === next.onEdit
+    && prev.onDelete === next.onDelete
+    && prev.onToggle === next.onToggle
+    && prev.onToggleFavorite === next.onToggleFavorite;
+});
+
 function KanbanColumn({
   column,
   tasks,
@@ -194,7 +202,7 @@ function KanbanColumn({
             </div>
           ) : (
             tasks.map(task => (
-              <SortableTaskCard
+              <MemoizedTaskCard
                 key={task.id}
                 task={task}
                 onEdit={onEdit}
@@ -221,6 +229,7 @@ export default function KanbanBoard({
 }: Props) {
   const [activeId, setActiveId] = useState<number | null>(null);
   const [overColumnId, setOverColumnId] = useState<Status | null>(null);
+  const overColumnRef = useRef<Status | null>(null);
 
   const columns = useMemo(() => COLUMNS, []);
 
@@ -269,13 +278,17 @@ export default function KanbanBoard({
     const activeCol = findColumnOfTask(active.id as number | string);
     const overCol = findColumnOfTask(over.id as number | string);
 
-    if (activeCol && overCol) setOverColumnId(overCol);
+    if (activeCol && overCol && overCol !== overColumnRef.current) {
+      overColumnRef.current = overCol;
+      setOverColumnId(overCol);
+    }
   }, [findColumnOfTask]);
 
   const handleDragEnd = useCallback((event: DragEndEvent) => {
     const { active, over } = event;
     setActiveId(null);
     setOverColumnId(null);
+    overColumnRef.current = null;
 
     if (!over) return;
 
